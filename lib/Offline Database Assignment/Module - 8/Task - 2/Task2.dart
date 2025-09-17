@@ -12,17 +12,14 @@ class Task2 extends StatefulWidget {
 class _Task2State extends State<Task2> {
   MyDb dbHelper = MyDb.instance;
 
-  // List to store tasks fetched from the database
   List<Map<String, dynamic>> tasks = [];
 
   @override
   void initState() {
     super.initState();
-    // Load tasks when the screen is first loaded
     _loadTasks();
   }
 
-  // Method to fetch tasks from the database
   Future<void> _loadTasks() async {
     List<Map<String, dynamic>> tasksList = await dbHelper.queryAllRows();
     setState(() {
@@ -30,10 +27,9 @@ class _Task2State extends State<Task2> {
     });
   }
 
-  // Method to toggle the completion status of a task
   Future<void> _toggleTaskStatus(int id, bool isDone) async {
     await dbHelper.updateTaskStatus(id, isDone);
-    _loadTasks(); // Reload tasks after updating
+    _loadTasks();
   }
 
   @override
@@ -48,7 +44,7 @@ class _Task2State extends State<Task2> {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => Task2addtodo()),
-              ).then((_) => _loadTasks()); // Reload tasks when returning
+              ).then((_) => _loadTasks());
             },
             icon: Icon(Icons.add),
           ),
@@ -69,15 +65,14 @@ class _Task2State extends State<Task2> {
                       : null),
             ),
             trailing: Checkbox(
-              value: task['isDone'] == 1, // Check if task is done
+              value: task['isDone'] == 1,
               onChanged: (bool? value) {
                 _toggleTaskStatus(task['id'], value!);
               },
             ),
-            // Delete button
             // onLongPress: () async {
             //   await dbHelper.deleteNote(task['id']);
-            //   _loadTasks(); // Reload tasks after deletion
+            //   _loadTasks();
             // },
           );
         },

@@ -42,7 +42,7 @@ class _Task2addtodoState extends State<Task2addtodo> {
                   onPressed: () async {
                     if (_addNote.currentState!.validate()) {
                       await _insert();
-                      Navigator.pop(context); // Go back to the main screen
+                      Navigator.pop(context);
                     }
                   },
                   child: Text('Add Note'),
@@ -59,12 +59,12 @@ class _Task2addtodoState extends State<Task2addtodo> {
   Future<void> _insert() async {
     Map<String, dynamic> row = {
       MyDb.title: title.text,
-      MyDb.isDone: 0, // Mark task as not done by default
+      MyDb.isDone: 0,
     };
 
     final id = await dbHelper.insertdata(row);
     print("Inserted Note ID: $id");
 
-    title.clear(); // Clear the text field after insertion
+    title.clear();
   }
 }
